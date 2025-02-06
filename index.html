@@ -2,38 +2,71 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="style.css">
+
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+            default-src 'none';
+            
+            style-src
+                'unsafe-inline'
+                'self'
+                https://prod.statics.indeed.com;
+
+            font-src https://prod.statics.indeed.com;
+
+            script-src
+                'unsafe-inline'
+                https://d3nr77unl9vwb.cloudfront.net
+                https://d9zgl8ybjt160.cloudfront.net;
+
+            connect-src
+                https://one-platform-sdk.sandbox.qa.indeed.net
+                https://d9zgl8ybjt160.cloudfront.net;
+        "
+    />
+
+    <link rel="stylesheet" href="style.css" />
     <title>Indeed Scout HelloWorld integration example</title>
   </head>
 
   <body>
     <header>
-        <h1>A pretend ATS</h1>
+      <h1>A pretend ATS</h1>
     </header>
 
     <main>
-        <h2>Pretend Job, id: Job12345</h2>
-        <p>In this example we're showing how to load the Indeed Scout HelloWorld module, and pass context from the ATS into Indeed Scout</p>
+      <h2>Pretend Job, id: Job12345</h2>
+      <p>
+        In this example we're showing how to load the Indeed Scout HelloWorld
+        module, and pass context from the ATS into Indeed Scout
+      </p>
     </main>
 
     <aside id="indeed-scout-hello-world"></aside>
-
     <script src="https://d3nr77unl9vwb.cloudfront.net/v0.2/sdk.js"></script>
 
     <script>
-        (async () => {
-            await window.Indeed.init();
-            const { ScoutHelloWorld } = await window.Indeed.elements.loadScope("scout-ui-platform");
+      (async () => {
+        await window.Indeed.init();
+        const { ScoutHelloWorld } = await window.Indeed.elements.loadScope(
+          "scout-ui-platform"
+        );
 
-            ScoutHelloWorld.mount(document.getElementById("indeed-scout-hello-world"), {
-                context: {
-                    identifiers: [{
-                        id: "Job12345",
-                        type: "Job",
-                    }],
+        ScoutHelloWorld.mount(
+          document.getElementById("indeed-scout-hello-world"),
+          {
+            context: {
+              identifiers: [
+                {
+                  id: "Job12345",
+                  type: "Job",
                 },
-            });
-        })();
+              ],
+            },
+          }
+        );
+      })();
     </script>
   </body>
 </html>
