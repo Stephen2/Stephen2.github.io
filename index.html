@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css">
+    <title>Indeed Scout HelloWorld integration example</title>
+  </head>
+
+  <body>
+    <header>
+        <h1>A pretend ATS</h1>
+    </header>
+
+    <main>
+        <p>In this example we're showing how to load the Indeed Scout HelloWorld module</p>
+    </main>
+
+    <aside id="indeed-scout-hello-world"></aside>
+
+    <script src="https://d3nr77unl9vwb.cloudfront.net/v0.2/sdk.js"></script>
+
+    <script>
+        (async () => {
+            await window.Indeed.init();
+            const { ScoutHelloWorld } = await window.Indeed.elements.loadScope('scout-ui-platform');
+            ScoutHelloWorld.mount(document.getElementById('indeed-scout-hello-world'));
+        })();
+    </script>
+  </body>
+</html>

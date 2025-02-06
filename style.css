@@ -1,0 +1,11 @@
+html {
+    font-family: sans-serif;
+}
+
+body {
+    background: #eee;
+}
+
+header {
+    border-bottom: 1px solid black;
+}
