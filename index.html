@@ -12,7 +12,8 @@
     </header>
 
     <main>
-        <p>In this example we're showing how to load the Indeed Scout HelloWorld module</p>
+        <h2>Pretend Job, id: Job12345</h2>
+        <p>In this example we're showing how to load the Indeed Scout HelloWorld module, and pass context from the ATS into Indeed Scout</p>
     </main>
 
     <aside id="indeed-scout-hello-world"></aside>
@@ -22,8 +23,16 @@
     <script>
         (async () => {
             await window.Indeed.init();
-            const { ScoutHelloWorld } = await window.Indeed.elements.loadScope('scout-ui-platform');
-            ScoutHelloWorld.mount(document.getElementById('indeed-scout-hello-world'));
+            const { ScoutHelloWorld } = await window.Indeed.elements.loadScope("scout-ui-platform");
+
+            ScoutHelloWorld.mount(document.getElementById("indeed-scout-hello-world"), {
+                context: {
+                    identifiers: [{
+                        id: "Job12345",
+                        type: "Job",
+                    }],
+                },
+            });
         })();
     </script>
   </body>
