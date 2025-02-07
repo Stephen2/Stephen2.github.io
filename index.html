@@ -49,8 +49,9 @@
     <script>
       (async () => {
         await window.Indeed.init();
+
         const { ScoutHelloWorld } = await window.Indeed.elements.load(
-          "scout-ui-platform"
+          "indeed-scout"
         );
 
         ScoutHelloWorld.mount(
