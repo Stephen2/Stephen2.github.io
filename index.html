@@ -18,11 +18,12 @@
             script-src
                 'unsafe-inline'
                 https://sdk.indeed.com
-                https://d9zgl8ybjt160.cloudfront.net;
+                https://d3oklwo3y1bx83.cloudfront.net;
 
             connect-src
-                https://one-platform-sdk.sandbox.qa.indeed.net
-                https://d9zgl8ybjt160.cloudfront.net;
+                https://sdk.sandbox.indeed.net/api
+                https://apis.indeed.com/graphql
+                https://d3oklwo3y1bx83.cloudfront.net;
         "
     />
 
@@ -44,17 +45,17 @@
     </main>
 
     <aside id="indeed-scout-hello-world"></aside>
-    <script src="https://sdk.indeed.com/js/preview/sdk.js"></script>
+    <script src="https://sdk.indeed.com/js/v0.2.5/sdk.js"></script>
 
     <script>
       (async () => {
         await window.Indeed.init();
 
-        const { ScoutHelloWorld } = await window.Indeed.elements.load(
+        const { ScoutPlatform } = await window.Indeed.elements.load(
           "indeed-scout"
         );
 
-        ScoutHelloWorld.create(
+        ScoutPlatform.create(
           document.getElementById("indeed-scout-hello-world"),
           {
             context: {
