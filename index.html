@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
 
-    <!-- Disabled during testing -->
-    <!-- <meta
+    <meta
       http-equiv="Content-Security-Policy"
       content="
             default-src 'none';
@@ -22,11 +21,12 @@
                 https://d3oklwo3y1bx83.cloudfront.net;
 
             connect-src
+                ws://127.0.0.1:8080//ws
                 https://sdk.sandbox.indeed.net/api
                 https://apis.indeed.com/graphql
                 https://d3oklwo3y1bx83.cloudfront.net;
         "
-    /> -->
+    />
 
     <link rel="stylesheet" href="style.css" />
     <title>Indeed Scout HelloWorld integration example</title>
@@ -46,17 +46,17 @@
     </main>
 
     <aside id="indeed-scout-hello-world"></aside>
-    <script src="https://sdk.indeed.com/js/v0.2.5/sdk.js"></script>
+    <script src="https://sdk.indeed.com/js/preview/sdk.js"></script>
 
     <script>
       (async () => {
         await window.Indeed.init();
 
-        const { ScoutPlatform } = await window.Indeed.elements.load(
+        const { ScoutHelloWorld } = await window.Indeed.elements.load(
           "indeed-scout"
         );
 
-        ScoutPlatform.create(
+        ScoutHelloWorld.create(
           document.getElementById("indeed-scout-hello-world"),
           {
             context: {
