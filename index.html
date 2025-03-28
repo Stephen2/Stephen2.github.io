@@ -6,27 +6,33 @@
     <meta
       http-equiv="Content-Security-Policy"
       content="
-            default-src 'none';
-            
-            style-src
-                'unsafe-inline'
-                'self'
-                https://prod.statics.indeed.com;
+        default-src 'none';
+        
+        style-src
+          'unsafe-inline'
+          'self'
+          https://prod.statics.indeed.com;
 
-            font-src https://prod.statics.indeed.com;
+        font-src https://prod.statics.indeed.com;
 
-            script-src
-                'unsafe-inline'
-                https://sdk.indeed.com
-                https://d3oklwo3y1bx83.cloudfront.net;
+        script-src
+          'unsafe-inline'
+          http://127.0.0.1:3002
+          http://localhost:3002
+          https://sdk.indeed.com
+          https://d3oklwo3y1bx83.cloudfront.net;
 
-            connect-src
-                ws://127.0.0.1:8080//ws
-                ws://localhost:8080//ws
-                https://sdk.indeed.com/api
-                https://sdk.indeed.com/api/next
-                https://apis.indeed.com/graphql
-                https://d3oklwo3y1bx83.cloudfront.net;
+        connect-src
+          http://127.0.0.1:3002
+          http://localhost:3002
+          ws://127.0.0.1:8080//ws
+          ws://localhost:8080//ws
+          ws://127.0.0.1:3002/ws
+          ws://localhost:3002/ws
+          https://sdk.indeed.com/api
+          https://sdk.indeed.com/api/next
+          https://apis.indeed.com/graphql
+          https://d3oklwo3y1bx83.cloudfront.net;
         "
     />
 
@@ -48,29 +54,53 @@
     </main>
 
     <aside id="indeed-scout-hello-world"></aside>
-    <script src="https://sdk.indeed.com/js/v0.2.7/sdk.js"></script>
+    <script src="https://sdk.indeed.com/js/preview/sdk.js"></script>
 
     <script>
-      (async () => {
-        await window.Indeed.init();
+      const fakeToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJqYW5lZG9lQGV4YW1wbGUuY29tIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTQ2MzAwODAwLCJleHAiOjE4OTM0NTYwMDB9.Csjq0GWRu5ChiEjNhzyDDuk9YR08gIwvnsfTkqoOISPb9ZEJcFGs6yrEZZ5lhyIneW-QIJZjqg8EPHaitFd6PncOb1zuFBcECK1aPNiVXQ1stS4GZZ0K7kMTfbn_bDtg3LwkScRLvd1UaXPX3gdWiyTWU_EQeBtpaKvN_NtqzRlAVslmHfsi50dgDmg0Pbk80oLqbN8TB4JctgM6VuvI5yCrwyID9GNwItSMVpd1ZjOmGTiof2hqi6E3KH3j9RfWz_Gq4Vq61XvYKEooDzDjuFSoie1vkptVp2fngRMBTxTTM2ZBCEpd_HbcrqBiHuIMw19nyXr8mP7n8rPLG4S1LA';
 
-        const { ScoutHelloWorld } = await window.Indeed.elements.load(
+      (async () => {
+        await window.Indeed.init({
+          clientKey: "FAKE_CLIENT_KEY",
+
+          auth: {
+            // Purposefully not logged in for now
+            accessToken: undefined,
+
+            login: async (requestedScopes) => {
+              console.log("LOGIN", { requestedScopes });
+
+              const token = await new Promise((resolve) => setTimeout(() => resolve(fakeToken), 2000));
+
+              return token;
+            },
+
+            grant: async (requestedScopes) => {
+              console.log("GRANT", { requestedScopes });
+
+              const token = await new Promise((resolve) => setTimeout(() => resolve(fakeToken), 2000));
+
+              return token;
+            },
+          }
+        });
+
+        const { IndeedScout } = await window.Indeed.elements.load(
           "indeed-scout"
         );
 
-        ScoutHelloWorld.create(
-          document.getElementById("indeed-scout-hello-world"),
-          {
-            context: {
-              identifiers: [
-                {
-                  id: "Job12345",
-                  type: "Job",
-                },
-              ],
-            },
-          }
-        );
+        const scout = IndeedScout.create({
+          context: {
+            identifiers: [
+              {
+                id: "Job12345",
+                type: "Job",
+              },
+            ],
+          },
+        });
+
+        scout.mount(document.getElementById("indeed-scout-hello-world"));
       })();
     </script>
   </body>
