@@ -86,7 +86,10 @@
         });
 
         const { IndeedScout } = await window.Indeed.elements.load(
-          "indeed-scout"
+          "indeed-scout",
+          {
+            remoteEntryUrl: "http://localhost:3002/remoteEntry.js",
+          }
         );
 
         const scout = IndeedScout.create({
